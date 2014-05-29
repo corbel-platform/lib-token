@@ -44,7 +44,7 @@ public class TokenInfo {
 	}
 
 	public TokenType getTokenType() {
-		return TokenType.fromString(getAsString(TYPE));
+		return TokenType.valueOf(getAsString(TYPE).toUpperCase());
 	}
 
 	public String getUserId() {
