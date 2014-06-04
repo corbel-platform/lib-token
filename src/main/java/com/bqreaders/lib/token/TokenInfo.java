@@ -3,11 +3,16 @@
  */
 package com.bqreaders.lib.token;
 
-import com.bqreaders.lib.token.model.TokenType;
-import com.google.gson.*;
+import java.util.Objects;
+
 import org.apache.commons.lang.Validate;
 
-import java.util.Objects;
+import com.bqreaders.lib.token.model.TokenType;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 /**
  * @author Alexander De Leon
@@ -20,6 +25,7 @@ public class TokenInfo {
 	private static final String CLIENT_ID = "clientId";
 	private static final String ONE_USE = "isOneUse";
 	private static final String STATE = "state";
+	private static final String DOMAIN_ID = "domainId";
 
 	private final JsonObject data;
 
@@ -57,6 +63,10 @@ public class TokenInfo {
 
 	public String getState() {
 		return getAsString(STATE);
+	}
+
+	public String getDomainId() {
+		return getAsString(DOMAIN_ID);
 	}
 
 	public boolean isOneUseToken() {
@@ -119,6 +129,11 @@ public class TokenInfo {
 
 		public Builder setState(String state) {
 			data.add(STATE, new JsonPrimitive(state));
+			return this;
+		}
+
+		public Builder setDomainId(String domainId) {
+			data.add(DOMAIN_ID, new JsonPrimitive(domainId));
 			return this;
 		}
 
