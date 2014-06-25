@@ -3,6 +3,8 @@
  */
 package com.bqreaders.lib.token.ioc;
 
+import java.time.Clock;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -32,7 +34,7 @@ public class OneTimeAccessTokenIoc {
 	@Bean
 	public TokenFactory tokenFactory(TokenSigner tokenSigner, TokenSerializer tokenSerializer,
 			OneTimeAccessTokenRepository oneTimeAccessTokenRepository) {
-		return new BasicTokenFactory(tokenSigner, tokenSerializer, oneTimeAccessTokenRepository);
+		return new BasicTokenFactory(tokenSigner, tokenSerializer, oneTimeAccessTokenRepository, Clock.systemUTC());
 	}
 
 }

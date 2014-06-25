@@ -1,19 +1,22 @@
 package com.bqreaders.lib.token.factory;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import com.bqreaders.lib.token.TokenGrant;
 import com.bqreaders.lib.token.TokenInfo;
 import com.bqreaders.lib.token.repository.OneTimeAccessTokenRepository;
 import com.bqreaders.lib.token.serializer.TokenSerializer;
 import com.bqreaders.lib.token.signer.TokenSigner;
-import org.joda.time.DateTimeUtils;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.concurrent.TimeUnit;
-
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Francisco Sanchez
@@ -35,14 +38,14 @@ public class BasicTokenFactoryTest {
 
 	@Before
 	public void setup() {
-		DateTimeUtils.setCurrentMillisFixed(0);
 
 		tokenInfo = mock(TokenInfo.class);
 		TokenSigner tokenSigner = mock(TokenSigner.class);
 		TokenSerializer tokenSerializer = mock(TokenSerializer.class);
 		oneTimeAccessTokenRepository = mock(OneTimeAccessTokenRepository.class);
 
-		tokenFactory = new BasicTokenFactory(tokenSigner, tokenSerializer, oneTimeAccessTokenRepository);
+		tokenFactory = new BasicTokenFactory(tokenSigner, tokenSerializer, oneTimeAccessTokenRepository, Clock.fixed(
+				Instant.EPOCH, ZoneOffset.UTC));
 
 		when(tokenSerializer.serialize(tokenInfo, ONE_TIME_ACCESS_TOKEN_DURATION_IN_MILLIS, tokenSigner)).thenReturn(
 				SERIALIZED_CODE);
