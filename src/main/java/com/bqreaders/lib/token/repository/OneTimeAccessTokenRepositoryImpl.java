@@ -1,26 +1,38 @@
 package com.bqreaders.lib.token.repository;
 
-import com.bqreaders.lib.token.model.OneTimeAccessToken;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+
+import com.bqreaders.lib.token.model.OneTimeAccessToken;
 
 /**
  * Created by Alberto J. Rubio
  */
 public class OneTimeAccessTokenRepositoryImpl implements CustomOneTimeAccessTokenRepository {
 
-    private final MongoOperations mongoOperations;
+	private static final String TAGS = "tags";
 
-    @Autowired
-    public OneTimeAccessTokenRepositoryImpl(MongoOperations mongoOperations) {
-        this.mongoOperations = mongoOperations;
-    }
+	private final MongoOperations mongoOperations;
 
-    @Override
-    public OneTimeAccessToken findAndRemove(String id) {
-        Query query = new Query().addCriteria(Criteria.where("id").is(id));
-        return mongoOperations.findAndRemove(query, OneTimeAccessToken.class);
-    }
+	@Autowired
+	public OneTimeAccessTokenRepositoryImpl(MongoOperations mongoOperations) {
+		this.mongoOperations = mongoOperations;
+	}
+
+	@Override
+	public OneTimeAccessToken findAndRemove(String id) {
+		Query query = Query.query(Criteria.where("id").is(id));
+		return mongoOperations.findAndRemove(query, OneTimeAccessToken.class);
+	}
+
+	@Override
+	public void deleteByTags(String... tags) {
+		if (ArrayUtils.isNotEmpty(tags)) {
+			Query query = Query.query(Criteria.where(TAGS).all((Object[]) tags));
+			mongoOperations.remove(query, OneTimeAccessToken.class);
+		}
+	}
 }

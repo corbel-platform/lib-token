@@ -31,12 +31,12 @@ public class BasicTokenFactory implements TokenFactory {
 	}
 
 	@Override
-	public TokenGrant createToken(TokenInfo info, long expiresIn) {
+	public TokenGrant createToken(TokenInfo info, long expiresIn, String... tags) {
 		Instant expireTime = clock.instant().plus(expiresIn, ChronoUnit.SECONDS);
 		long expiresAt = expireTime.toEpochMilli();
 		String token = serializer.serialize(info, expiresAt, signer);
 		if (info.isOneUseToken()) {
-			oneTimeAccessTokenRepository.save(new OneTimeAccessToken(token, Date.from(expireTime)));
+			oneTimeAccessTokenRepository.save(new OneTimeAccessToken(token, Date.from(expireTime), tags));
 		}
 		return new TokenGrant(token, expiresIn);
 	}

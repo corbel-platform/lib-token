@@ -7,5 +7,7 @@ import com.bqreaders.lib.token.model.OneTimeAccessToken;
  */
 public interface CustomOneTimeAccessTokenRepository {
 
-    OneTimeAccessToken findAndRemove(String id);
+	OneTimeAccessToken findAndRemove(String id);
+
+	void deleteByTags(String... tags);
 }

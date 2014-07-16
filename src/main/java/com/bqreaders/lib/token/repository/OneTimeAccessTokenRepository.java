@@ -1,7 +1,8 @@
 package com.bqreaders.lib.token.repository;
 
-import com.bqreaders.lib.token.model.OneTimeAccessToken;
 import org.springframework.data.repository.CrudRepository;
+
+import com.bqreaders.lib.token.model.OneTimeAccessToken;
 
 /**
  * @author Alberto J. Rubio
