@@ -1,11 +1,9 @@
 package com.bqreaders.lib.token.model;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -22,10 +20,14 @@ public class OneTimeAccessToken {
     public OneTimeAccessToken(String id, Date expireAt, List<String> tags) {
         this.id = id;
         this.expireAt = expireAt;
-        this.tags = tags.isEmpty() ? null : tags;
+        this.tags = isEmptyList(tags) ? null : tags;
     }
 
-	public String getId() {
+    private boolean isEmptyList(List<String> list) {
+        return list == null || list.size() == 0;
+    }
+
+    public String getId() {
 		return id;
 	}
 
