@@ -19,11 +19,11 @@ public class OneTimeAccessToken {
 	private final Date expireAt;
 	private final List<String> tags;
 
-	public OneTimeAccessToken(String id, Date expireAt, String... tags) {
-		this.id = id;
-		this.expireAt = expireAt;
-		this.tags = ArrayUtils.isNotEmpty(tags) ? Arrays.asList(tags) : null;
-	}
+    public OneTimeAccessToken(String id, Date expireAt, List<String> tags) {
+        this.id = id;
+        this.expireAt = expireAt;
+        this.tags = tags.isEmpty() ? null : tags;
+    }
 
 	public String getId() {
 		return id;

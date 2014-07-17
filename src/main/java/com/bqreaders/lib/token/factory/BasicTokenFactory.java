@@ -3,6 +3,7 @@ package com.bqreaders.lib.token.factory;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Date;
 
 import com.bqreaders.lib.token.TokenGrant;
@@ -36,7 +37,7 @@ public class BasicTokenFactory implements TokenFactory {
 		long expiresAt = expireTime.toEpochMilli();
 		String token = serializer.serialize(info, expiresAt, signer);
 		if (info.isOneUseToken()) {
-			oneTimeAccessTokenRepository.save(new OneTimeAccessToken(token, Date.from(expireTime), tags));
+			oneTimeAccessTokenRepository.save(new OneTimeAccessToken(token, Date.from(expireTime), Arrays.asList(tags)));
 		}
 		return new TokenGrant(token, expiresIn);
 	}
