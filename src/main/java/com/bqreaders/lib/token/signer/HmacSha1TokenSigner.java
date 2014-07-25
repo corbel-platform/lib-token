@@ -26,7 +26,7 @@ public class HmacSha1TokenSigner implements TokenSigner {
 	}
 
 	@Override
-	public String sign(String token) {
+	public synchronized String sign(String token) {
 		byte[] rawHmac = mac.doFinal(token.getBytes());
 		return Base64.encodeBase64URLSafeString(rawHmac);
 	}
