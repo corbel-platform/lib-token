@@ -3,15 +3,17 @@
  */
 package com.bqreaders.lib.token.parser;
 
+import java.nio.charset.Charset;
+import java.util.List;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.Validate;
+
 import com.bqreaders.lib.token.TokenInfo;
 import com.bqreaders.lib.token.exception.TokenVerificationException;
 import com.bqreaders.lib.token.reader.TokenReader;
 import com.bqreaders.lib.token.serializer.Base64TokenSerializer;
 import com.bqreaders.lib.token.verifier.TokenVerifier;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.Validate;
-
-import java.util.List;
 
 /**
  * @author Alexander De Leon
@@ -75,7 +77,7 @@ public class Base64BasicTokenParser implements TokenParser {
 		}
 
 		private String decode(String string) {
-			return new String(Base64.decodeBase64(string.getBytes()));
+			return new String(Base64.decodeBase64(string.getBytes(Charset.forName("UTF-8"))));
 		}
 
 	}
