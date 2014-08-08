@@ -1,15 +1,16 @@
 package com.bqreaders.lib.token.signer;
 
-import org.apache.commons.codec.binary.Base64;
-import org.junit.Before;
-import org.junit.Test;
+import static org.fest.assertions.api.Assertions.assertThat;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Francisco Sanchez
@@ -21,7 +22,7 @@ public class HmacSha1TokenSignerTest {
 
 	@Before
 	public void setup() throws NoSuchAlgorithmException, InvalidKeyException {
-		SecretKeySpec signingKey = new SecretKeySpec(SIGNER_KEY.getBytes(), "HmacSHA1");
+		SecretKeySpec signingKey = new SecretKeySpec(SIGNER_KEY.getBytes(StandardCharsets.UTF_8), "HmacSHA1");
 		mac = Mac.getInstance("HmacSHA1");
 		mac.init(signingKey);
 	}
@@ -30,7 +31,7 @@ public class HmacSha1TokenSignerTest {
 	public void testTokenExpired() throws InvalidKeyException, NoSuchAlgorithmException {
 		TokenSigner tokenSigner = new HmacSha1TokenSigner(SIGNER_KEY);
 		String signature = tokenSigner.sign(TEXT_TO_SIGN);
-		String localSignature = Base64.encodeBase64URLSafeString(mac.doFinal(TEXT_TO_SIGN.getBytes()));
+		String localSignature = "XIPhFxFEQdztg5sYADQU1Rhd-Oc=";
 		assertThat(signature).isEqualTo(localSignature);
 	}
 

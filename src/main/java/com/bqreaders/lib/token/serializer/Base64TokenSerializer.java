@@ -3,9 +3,8 @@
  */
 package com.bqreaders.lib.token.serializer;
 
-import java.nio.charset.Charset;
-
-import org.apache.commons.codec.binary.Base64;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import com.bqreaders.lib.token.TokenInfo;
 import com.bqreaders.lib.token.signer.TokenSigner;
@@ -23,8 +22,8 @@ public class Base64TokenSerializer implements TokenSerializer {
 	@Override
 	public String serialize(TokenInfo info, long expireTime, TokenSigner signer) {
 		String token = Joiner.on(SEPARATOR).join(
-				Base64.encodeBase64URLSafeString(info.serialize().getBytes(Charset.forName("UTF-8"))),
-				Long.toHexString(expireTime));
+				new String(Base64.getUrlEncoder().encode(info.serialize().getBytes(StandardCharsets.UTF_8)),
+						StandardCharsets.UTF_8), Long.toHexString(expireTime));
 		return Joiner.on(SEPARATOR).join(token, signer.sign(token));
 	}
 

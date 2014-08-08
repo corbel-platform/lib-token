@@ -1,24 +1,24 @@
 package com.bqreaders.lib.token.serializer;
 
-import com.bqreaders.lib.token.TokenInfo;
-import com.bqreaders.lib.token.signer.TokenSigner;
-import org.apache.commons.codec.binary.Base64;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.bqreaders.lib.token.TokenInfo;
+import com.bqreaders.lib.token.signer.TokenSigner;
 
 /**
  * @author Francisco Sanchez
  */
 public class Base64TokenSerializerTest {
 	private static final String SERIALIZED_TOKEN = "Serialized.token";
-	private static final String BASE64_SERIALIZED_TOKEN = Base64.encodeBase64URLSafeString(SERIALIZED_TOKEN.getBytes());
+	private static final String BASE64_SERIALIZED_TOKEN = "U2VyaWFsaXplZC50b2tlbg==";
 	private static final String SIGN = "Signature";
-	private long EXPIRE_TIME = 10L;
-	private String HEX_EXPIRE_TIME = Long.toHexString(EXPIRE_TIME);
+	private final long EXPIRE_TIME = 10L;
+	private final String HEX_EXPIRE_TIME = Long.toHexString(EXPIRE_TIME);
 
 	private TokenInfo tokenInfo;
 	private TokenSigner tokenSigner;

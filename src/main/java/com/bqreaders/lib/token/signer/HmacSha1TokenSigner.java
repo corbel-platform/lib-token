@@ -3,12 +3,13 @@
  */
 package com.bqreaders.lib.token.signer;
 
-import org.apache.commons.codec.binary.Base64;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author Alexander De Leon
@@ -27,8 +28,8 @@ public class HmacSha1TokenSigner implements TokenSigner {
 
 	@Override
 	public synchronized String sign(String token) {
-		byte[] rawHmac = mac.doFinal(token.getBytes());
-		return Base64.encodeBase64URLSafeString(rawHmac);
+		byte[] rawHmac = mac.doFinal(token.getBytes(StandardCharsets.UTF_8));
+		return new String(Base64.getUrlEncoder().encode(rawHmac), StandardCharsets.UTF_8);
 	}
 
 }

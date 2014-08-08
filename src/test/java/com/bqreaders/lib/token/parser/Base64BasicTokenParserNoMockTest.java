@@ -3,21 +3,22 @@
  */
 package com.bqreaders.lib.token.parser;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+import java.util.Base64;
+import java.util.Collections;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+
 import com.bqreaders.lib.token.TokenInfo;
 import com.bqreaders.lib.token.exception.TokenVerificationException;
 import com.bqreaders.lib.token.model.TokenType;
 import com.bqreaders.lib.token.reader.TokenReader;
 import com.bqreaders.lib.token.verifier.TokenVerifier;
-import org.apache.commons.codec.binary.Base64;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.util.Collections;
-
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 /**
  * @author Alexander De Leon
@@ -35,11 +36,15 @@ public class Base64BasicTokenParserNoMockTest {
 	private static final String ONE_TIME_TEST_TOKEN;
 
 	static {
-		TEST_TOKEN = Base64.encodeBase64URLSafeString(TEST_TOKEN_INFO.serialize().getBytes()) + "."
-				+ Long.toHexString(TEST_EXIPIRE) + "." + Base64.encodeBase64URLSafeString(TEST_SIGNATURE.getBytes());
+		TEST_TOKEN = new String(Base64.getUrlEncoder().encode(TEST_TOKEN_INFO.serialize().getBytes())) + "."
+				+ Long.toHexString(TEST_EXIPIRE) + "."
+				+ new String(Base64.getUrlEncoder().encode(TEST_SIGNATURE.getBytes()));
 
-		ONE_TIME_TEST_TOKEN = Base64.encodeBase64URLSafeString(TEST_ONE_TIME_TOKEN_INFO.serialize().getBytes()) + "."
-				+ Long.toHexString(TEST_EXIPIRE) + "." + Base64.encodeBase64URLSafeString(TEST_SIGNATURE.getBytes());
+		ONE_TIME_TEST_TOKEN = new String(Base64.getUrlEncoder().encode(TEST_ONE_TIME_TOKEN_INFO.serialize().getBytes()))
+				+ "."
+				+ Long.toHexString(TEST_EXIPIRE)
+				+ "."
+				+ new String(Base64.getUrlEncoder().encode(TEST_SIGNATURE.getBytes()));
 	}
 
 	private Base64BasicTokenParser parser;

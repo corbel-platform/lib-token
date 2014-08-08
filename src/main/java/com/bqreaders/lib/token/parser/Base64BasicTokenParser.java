@@ -3,10 +3,11 @@
  */
 package com.bqreaders.lib.token.parser;
 
-import java.nio.charset.Charset;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.Validate;
 
 import com.bqreaders.lib.token.TokenInfo;
@@ -47,13 +48,17 @@ public class Base64BasicTokenParser implements TokenParser {
 		private final long expire;
 		private final String signature;
 
-		public Reader(String token) {
-			this.token = token;
-			String[] parts = token.split(Base64TokenSerializer.SEPARATOR_REGEX);
-			Validate.isTrue(parts.length == 3);
-			info = TokenInfo.deserialize(decode(parts[0]));
-			expire = Long.parseLong(parts[1], 16);
-			signature = decode(parts[2]);
+		public Reader(String token) throws TokenVerificationException {
+			try {
+				this.token = token;
+				String[] parts = token.split(Base64TokenSerializer.SEPARATOR_REGEX);
+				Validate.isTrue(parts.length == 3);
+				info = TokenInfo.deserialize(decode(parts[0]));
+				expire = Long.parseLong(parts[1], 16);
+				signature = decode(parts[2]);
+			} catch (UnsupportedEncodingException e) {
+				throw new TokenVerificationException("Encoding problem", e);
+			}
 		}
 
 		@Override
@@ -76,8 +81,9 @@ public class Base64BasicTokenParser implements TokenParser {
 			return token;
 		}
 
-		private String decode(String string) {
-			return new String(Base64.decodeBase64(string.getBytes(Charset.forName("UTF-8"))));
+		private String decode(String string) throws UnsupportedEncodingException {
+			return new String(Base64.getUrlDecoder().decode(string.getBytes(StandardCharsets.UTF_8)),
+					StandardCharsets.UTF_8);
 		}
 
 	}
