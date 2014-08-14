@@ -22,8 +22,10 @@ public class Base64TokenSerializer implements TokenSerializer {
 	@Override
 	public String serialize(TokenInfo info, long expireTime, TokenSigner signer) {
 		String token = Joiner.on(SEPARATOR).join(
-				new String(Base64.getUrlEncoder().encode(info.serialize().getBytes(StandardCharsets.UTF_8)),
-						StandardCharsets.UTF_8), Long.toHexString(expireTime));
+				new String(Base64.getUrlEncoder().withoutPadding()
+						.encode(info.serialize().getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8),
+				Long.toHexString(expireTime));
+
 		return Joiner.on(SEPARATOR).join(token, signer.sign(token));
 	}
 

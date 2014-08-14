@@ -36,15 +36,16 @@ public class Base64BasicTokenParserNoMockTest {
 	private static final String ONE_TIME_TEST_TOKEN;
 
 	static {
-		TEST_TOKEN = new String(Base64.getUrlEncoder().encode(TEST_TOKEN_INFO.serialize().getBytes())) + "."
-				+ Long.toHexString(TEST_EXIPIRE) + "."
-				+ new String(Base64.getUrlEncoder().encode(TEST_SIGNATURE.getBytes()));
+		TEST_TOKEN = new String(Base64.getUrlEncoder().withoutPadding().encode(TEST_TOKEN_INFO.serialize().getBytes()))
+				+ "." + Long.toHexString(TEST_EXIPIRE) + "."
+				+ new String(Base64.getUrlEncoder().withoutPadding().encode(TEST_SIGNATURE.getBytes()));
 
-		ONE_TIME_TEST_TOKEN = new String(Base64.getUrlEncoder().encode(TEST_ONE_TIME_TOKEN_INFO.serialize().getBytes()))
+		ONE_TIME_TEST_TOKEN = new String(Base64.getUrlEncoder().withoutPadding()
+				.encode(TEST_ONE_TIME_TOKEN_INFO.serialize().getBytes()))
 				+ "."
 				+ Long.toHexString(TEST_EXIPIRE)
 				+ "."
-				+ new String(Base64.getUrlEncoder().encode(TEST_SIGNATURE.getBytes()));
+				+ new String(Base64.getUrlEncoder().withoutPadding().encode(TEST_SIGNATURE.getBytes()));
 	}
 
 	private Base64BasicTokenParser parser;

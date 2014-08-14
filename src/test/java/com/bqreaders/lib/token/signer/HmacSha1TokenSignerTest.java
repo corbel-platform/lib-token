@@ -31,7 +31,7 @@ public class HmacSha1TokenSignerTest {
 	public void testTokenExpired() throws InvalidKeyException, NoSuchAlgorithmException {
 		TokenSigner tokenSigner = new HmacSha1TokenSigner(SIGNER_KEY);
 		String signature = tokenSigner.sign(TEXT_TO_SIGN);
-		String localSignature = "XIPhFxFEQdztg5sYADQU1Rhd-Oc=";
+		String localSignature = "XIPhFxFEQdztg5sYADQU1Rhd-Oc";
 		assertThat(signature).isEqualTo(localSignature);
 	}
 

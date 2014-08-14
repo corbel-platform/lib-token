@@ -15,7 +15,7 @@ import com.bqreaders.lib.token.signer.TokenSigner;
  */
 public class Base64TokenSerializerTest {
 	private static final String SERIALIZED_TOKEN = "Serialized.token";
-	private static final String BASE64_SERIALIZED_TOKEN = "U2VyaWFsaXplZC50b2tlbg==";
+	private static final String BASE64_SERIALIZED_TOKEN = "U2VyaWFsaXplZC50b2tlbg";
 	private static final String SIGN = "Signature";
 	private final long EXPIRE_TIME = 10L;
 	private final String HEX_EXPIRE_TIME = Long.toHexString(EXPIRE_TIME);

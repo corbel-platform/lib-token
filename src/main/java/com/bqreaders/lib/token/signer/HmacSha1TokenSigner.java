@@ -29,7 +29,7 @@ public class HmacSha1TokenSigner implements TokenSigner {
 	@Override
 	public synchronized String sign(String token) {
 		byte[] rawHmac = mac.doFinal(token.getBytes(StandardCharsets.UTF_8));
-		return new String(Base64.getUrlEncoder().encode(rawHmac), StandardCharsets.UTF_8);
+		return new String(Base64.getUrlEncoder().withoutPadding().encode(rawHmac), StandardCharsets.UTF_8);
 	}
 
 }
