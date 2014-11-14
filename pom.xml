@@ -9,7 +9,7 @@
 	</parent>
 
 	<groupId>com.bqreaders.lib</groupId>
-	<version>1.7.0-SNAPSHOT</version>
+	<version>1.7.0</version>
 	<artifactId>token</artifactId>
 
 	<name>lib-token</name>
@@ -17,7 +17,7 @@
 	<scm>
 		<connection>scm:git:git@bitbucket.org:mundoreader/lib-token.git</connection>
 		<developerConnection>scm:git:git@bitbucket.org:mundoreader/lib-token.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>token-1.7.0</tag>
 	</scm>
 
 	<properties>
