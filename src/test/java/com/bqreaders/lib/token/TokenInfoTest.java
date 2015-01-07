@@ -1,9 +1,10 @@
 package com.bqreaders.lib.token;
 
-import com.bqreaders.lib.token.model.TokenType;
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import org.junit.Test;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import com.bqreaders.lib.token.model.TokenType;
 
 /**
  * @author Cristian del Cerro
@@ -13,13 +14,14 @@ public class TokenInfoTest {
 	@Test
 	public void testDeserialize() {
 		String serialized = TokenInfo.newBuilder().setType(TokenType.TOKEN).setUserId("User").setClientId("Client")
-				.setOneUseToken(false).build().serialize();
+				.setDeviceId("Device").setOneUseToken(false).build().serialize();
 
 		TokenInfo tokenInfoTest = TokenInfo.deserialize(serialized);
 
 		assertThat(tokenInfoTest.getTokenType()).isEqualTo(TokenType.TOKEN);
 		assertThat(tokenInfoTest.getUserId()).isEqualTo("User");
 		assertThat(tokenInfoTest.getClientId()).isEqualTo("Client");
+		assertThat(tokenInfoTest.getDeviceId()).isEqualTo("Device");
 		assertThat(tokenInfoTest.isOneUseToken()).isEqualTo(false);
 	}
 

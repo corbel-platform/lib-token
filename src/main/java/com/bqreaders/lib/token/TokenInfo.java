@@ -8,11 +8,7 @@ import java.util.Objects;
 import org.apache.commons.lang.Validate;
 
 import com.bqreaders.lib.token.model.TokenType;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 
 /**
  * @author Alexander De Leon
@@ -23,6 +19,7 @@ public class TokenInfo {
 	private static final String TYPE = "type";
 	private static final String USER_ID = "userId";
 	private static final String CLIENT_ID = "clientId";
+	private static final String DEVICE_ID = "deviceId";
 	private static final String ONE_USE = "isOneUse";
 	private static final String STATE = "state";
 	private static final String DOMAIN_ID = "domainId";
@@ -59,6 +56,10 @@ public class TokenInfo {
 
 	public String getClientId() {
 		return getAsString(CLIENT_ID);
+	}
+
+	public String getDeviceId() {
+		return getAsString(DEVICE_ID);
 	}
 
 	public String getState() {
@@ -119,6 +120,11 @@ public class TokenInfo {
 
 		public Builder setClientId(String clientId) {
 			data.add(CLIENT_ID, new JsonPrimitive(clientId));
+			return this;
+		}
+
+		public Builder setDeviceId(String deviceIdId) {
+			data.add(DEVICE_ID, new JsonPrimitive(deviceIdId));
 			return this;
 		}
 
