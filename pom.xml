@@ -15,8 +15,8 @@
 	<name>lib-token</name>
 
 	<scm>
-		<connection>scm:git:git@bitbucket.org:mundoreader/lib-token.git</connection>
-		<developerConnection>scm:git:git@bitbucket.org:mundoreader/lib-token.git</developerConnection>
+		<connection>scm:git:ssh://git@stash.bq.com:7999/swgen/lib-token.git</connection>
+		<developerConnection>scm:git:ssh://git@stash.bq.com:7999/swgen/lib-token.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
