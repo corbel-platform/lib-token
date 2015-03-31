@@ -22,7 +22,7 @@ import com.bq.oss.lib.token.verifier.OneTimeAccessTokenVerifier;
  *
  */
 @Configuration
-@EnableMongoRepositories(value = { "com.bqreaders.lib.token.repository" }, repositoryFactoryBeanClass = MongoCommonRepositoryFactoryBean.class)
+@EnableMongoRepositories(value = { "com.bq.oss.lib.token.repository" }, repositoryFactoryBeanClass = MongoCommonRepositoryFactoryBean.class)
 public class OneTimeAccessTokenIoc {
 
 	@Bean
