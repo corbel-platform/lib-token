@@ -1,181 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.bq.oss</groupId>
-		<artifactId>oss-parents</artifactId>
-		<version>0.4.0</version>
-	</parent>
+    <parent>
+        <groupId>com.bq.oss</groupId>
+        <artifactId>oss-parents</artifactId>
+        <version>0.4.0</version>
+    </parent>
 
-	<groupId>com.bq.oss.lib</groupId>
-	<artifactId>token</artifactId>
-	<version>0.5.0-SNAPSHOT</version>
+    <groupId>com.bq.oss.lib</groupId>
+    <artifactId>token</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
 
-	<name>lib-token</name>
+    <name>lib-token</name>
 
-	<description>Authentication tokens Library</description>
-	<url>https://github.com/bq/lib-token</url>
+    <description>Authentication tokens Library</description>
+    <url>https://github.com/bq/lib-token</url>
 
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<organization>
-		<name>bq</name>
-		<url>http://www.bq.com/</url>
-	</organization>
+    <organization>
+        <name>bq</name>
+        <url>http://www.bq.com/</url>
+    </organization>
 
-	<scm>
-		<connection>scm:git:git@github.com:bq/lib-token.git</connection>
-		<developerConnection>scm:git:git@github.com:bq/lib-token.git</developerConnection>
-		<url>https://github.com/bq/lib-token</url>
-		<tag>HEAD</tag>
-	</scm>
+    <scm>
+        <connection>scm:git:git@github.com:bq/lib-token.git</connection>
+        <developerConnection>scm:git:git@github.com:bq/lib-token.git</developerConnection>
+        <url>https://github.com/bq/lib-token</url>
+        <tag>HEAD</tag>
+    </scm>
 
-	<properties>
-		<dropwizard.version>0.7.1</dropwizard.version>
-		<spring.version>4.1.2.RELEASE</spring.version>
-	</properties>
+    <properties>
+        <dropwizard.version>0.7.1</dropwizard.version>
+        <spring.version>4.1.2.RELEASE</spring.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>io.dropwizard</groupId>
-			<artifactId>dropwizard-core</artifactId>
-			<version>${dropwizard.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.bq.oss.lib</groupId>
-			<artifactId>mongodb</artifactId>
-			<version>0.2.0</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bq.oss.lib</groupId>
+            <artifactId>mongodb</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+    </dependencies>
 
-	<profiles>
-		<profile>
-			<id>release-sign-artifacts</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/bq/lib-token</url>
-	</ciManagement>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/bq/lib-token</url>
+    </ciManagement>
 
-	<issueManagement>
-		<url>https://github.com/bq/lib-token/issues</url>
-		<system>GitHub Issues</system>
-	</issueManagement>
+    <issueManagement>
+        <url>https://github.com/bq/lib-token/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
 
-	<developers>
-		<developer>
-			<name>David Martínez</name>
-			<email>david.martinez@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Alexander de Leon</name>
-			<email>alexander.deleon@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Alberto J. Rubio</name>
-			<email>alberto.rubio@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Anthanh Pham</name>
-			<email>anthanh.pham@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Francisco Sánchez</name>
-			<email>francisco.sanchez@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Ismael Madirolas</name>
-			<email>ismael.madirolas@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Cristian del Cerro</name>
-			<email>cristian.delcerro@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Rubén Carrasco</name>
-			<email>rcarrasco@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Laura Sada</name>
-			<email>laura.sada@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Luis Miguel García</name>
-			<email>luismiguel.garcia@bq.com</email>
-			<timezone>Europe/Madrid</timezone>
-			<roles>
-				<role>committer</role>
-			</roles>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <name>David Martínez</name>
+            <email>david.martinez@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Alexander de Leon</name>
+            <email>alexander.deleon@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Alberto J. Rubio</name>
+            <email>alberto.rubio@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Anthanh Pham</name>
+            <email>anthanh.pham@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Francisco Sánchez</name>
+            <email>francisco.sanchez@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Ismael Madirolas</name>
+            <email>ismael.madirolas@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Cristian del Cerro</name>
+            <email>cristian.delcerro@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Rubén Carrasco</name>
+            <email>rcarrasco@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Laura Sada</name>
+            <email>laura.sada@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Luis Miguel García</name>
+            <email>luismiguel.garcia@bq.com</email>
+            <timezone>Europe/Madrid</timezone>
+            <roles>
+                <role>committer</role>
+            </roles>
+        </developer>
+    </developers>
 
 </project>

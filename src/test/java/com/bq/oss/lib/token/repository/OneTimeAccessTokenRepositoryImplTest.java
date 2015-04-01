@@ -3,14 +3,11 @@
  */
 package com.bq.oss.lib.token.repository;
 
-import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 import java.util.Arrays;
 
-import com.bq.oss.lib.token.model.OneTimeAccessToken;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -18,6 +15,7 @@ import org.mockito.Mockito;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.bq.oss.lib.token.model.OneTimeAccessToken;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
 

@@ -3,8 +3,8 @@
  */
 package com.bq.oss.lib.token.serializer;
 
-import com.bq.oss.lib.token.signer.TokenSigner;
 import com.bq.oss.lib.token.TokenInfo;
+import com.bq.oss.lib.token.signer.TokenSigner;
 
 /**
  * @author Alexander De Leon

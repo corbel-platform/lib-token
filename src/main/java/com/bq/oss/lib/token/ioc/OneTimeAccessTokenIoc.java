@@ -5,16 +5,16 @@ package com.bq.oss.lib.token.ioc;
 
 import java.time.Clock;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
 import com.bq.oss.lib.mongo.config.MongoCommonRepositoryFactoryBean;
 import com.bq.oss.lib.token.factory.BasicTokenFactory;
 import com.bq.oss.lib.token.factory.TokenFactory;
 import com.bq.oss.lib.token.repository.OneTimeAccessTokenRepository;
 import com.bq.oss.lib.token.serializer.TokenSerializer;
 import com.bq.oss.lib.token.signer.TokenSigner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
 import com.bq.oss.lib.token.verifier.OneTimeAccessTokenVerifier;
 
 /**

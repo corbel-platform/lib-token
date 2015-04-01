@@ -1,8 +1,8 @@
 package com.bq.oss.lib.token;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Cristian del Cerro

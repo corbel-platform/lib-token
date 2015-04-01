@@ -1,14 +1,15 @@
 package com.bq.oss.lib.token.repository;
 
-import com.bq.oss.lib.mongo.index.MongoIndex;
-import com.bq.oss.lib.token.model.OneTimeAccessToken;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoOperations;
 
-import java.util.concurrent.TimeUnit;
+import com.bq.oss.lib.mongo.index.MongoIndex;
+import com.bq.oss.lib.token.model.OneTimeAccessToken;
 
 /**
  * @author Rubén Carrasco

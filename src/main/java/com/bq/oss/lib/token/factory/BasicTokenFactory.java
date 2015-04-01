@@ -8,10 +8,10 @@ import java.util.Date;
 
 import com.bq.oss.lib.token.TokenGrant;
 import com.bq.oss.lib.token.TokenInfo;
+import com.bq.oss.lib.token.model.OneTimeAccessToken;
 import com.bq.oss.lib.token.repository.OneTimeAccessTokenRepository;
 import com.bq.oss.lib.token.serializer.TokenSerializer;
 import com.bq.oss.lib.token.signer.TokenSigner;
-import com.bq.oss.lib.token.model.OneTimeAccessToken;
 
 /**
  * @author Francisco Sanchez

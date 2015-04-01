@@ -4,8 +4,8 @@
 package com.bq.oss.lib.token.verifier;
 
 import com.bq.oss.lib.token.exception.TokenVerificationException;
-import com.bq.oss.lib.token.repository.OneTimeAccessTokenRepository;
 import com.bq.oss.lib.token.reader.TokenReader;
+import com.bq.oss.lib.token.repository.OneTimeAccessTokenRepository;
 
 /**
  * @author Alberto J. Rubio

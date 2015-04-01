@@ -4,10 +4,11 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.bq.oss.lib.token.TokenInfo;
-import com.bq.oss.lib.token.signer.TokenSigner;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.bq.oss.lib.token.TokenInfo;
+import com.bq.oss.lib.token.signer.TokenSigner;
 
 /**
  * @author Francisco Sanchez

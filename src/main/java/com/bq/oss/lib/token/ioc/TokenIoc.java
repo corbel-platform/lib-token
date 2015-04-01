@@ -3,20 +3,20 @@ package com.bq.oss.lib.token.ioc;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.bq.oss.lib.token.parser.Base64BasicTokenParser;
-import com.bq.oss.lib.token.signer.TokenSigner;
-import com.bq.oss.lib.token.verifier.SignatureTokenVerifier;
-import com.bq.oss.lib.token.verifier.TokenVerifier;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.bq.oss.lib.token.parser.Base64BasicTokenParser;
 import com.bq.oss.lib.token.parser.TokenParser;
 import com.bq.oss.lib.token.serializer.Base64TokenSerializer;
 import com.bq.oss.lib.token.serializer.TokenSerializer;
 import com.bq.oss.lib.token.signer.HmacSha1TokenSigner;
+import com.bq.oss.lib.token.signer.TokenSigner;
 import com.bq.oss.lib.token.verifier.ExpirationTokenVerifier;
+import com.bq.oss.lib.token.verifier.SignatureTokenVerifier;
+import com.bq.oss.lib.token.verifier.TokenVerifier;
 
 /**
  * Created by Alberto J. Rubio

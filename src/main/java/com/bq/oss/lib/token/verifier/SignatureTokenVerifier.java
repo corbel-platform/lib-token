@@ -3,10 +3,10 @@
  */
 package com.bq.oss.lib.token.verifier;
 
-import com.bq.oss.lib.token.signer.TokenSigner;
 import com.bq.oss.lib.token.exception.TokenVerificationException;
 import com.bq.oss.lib.token.reader.TokenReader;
 import com.bq.oss.lib.token.serializer.TokenSerializer;
+import com.bq.oss.lib.token.signer.TokenSigner;
 
 /**
  * @author Alexander De Leon

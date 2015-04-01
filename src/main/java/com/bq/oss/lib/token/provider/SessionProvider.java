@@ -9,10 +9,12 @@ import java.lang.reflect.Type;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.core.Cookie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.bq.oss.lib.token.exception.TokenVerificationException;
 import com.bq.oss.lib.token.parser.TokenParser;
 import com.bq.oss.lib.token.reader.TokenReader;
-
 import com.google.common.base.Optional;
 import com.sun.jersey.api.core.HttpContext;
 import com.sun.jersey.api.model.Parameter;
@@ -21,8 +23,6 @@ import com.sun.jersey.core.spi.component.ComponentScope;
 import com.sun.jersey.server.impl.inject.AbstractHttpContextInjectable;
 import com.sun.jersey.spi.inject.Injectable;
 import com.sun.jersey.spi.inject.InjectableProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Alexander De Leon

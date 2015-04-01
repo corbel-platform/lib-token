@@ -3,18 +3,19 @@
  */
 package com.bq.oss.lib.token.verifier;
 
-import com.bq.oss.lib.token.signer.TokenSigner;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+
 import com.bq.oss.lib.token.TokenInfo;
 import com.bq.oss.lib.token.exception.TokenVerificationException;
 import com.bq.oss.lib.token.model.TokenType;
 import com.bq.oss.lib.token.reader.TokenReader;
 import com.bq.oss.lib.token.serializer.TokenSerializer;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.bq.oss.lib.token.signer.TokenSigner;
 
 /**
  * @author Alexander De Leon
