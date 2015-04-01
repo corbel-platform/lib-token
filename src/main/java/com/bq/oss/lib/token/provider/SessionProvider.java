@@ -30,77 +30,77 @@ import org.slf4j.LoggerFactory;
  */
 public class SessionProvider implements InjectableProvider<CookieParam, Parameter> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SessionProvider.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SessionProvider.class);
 
-    private final TokenParser tokenParser;
+	private final TokenParser tokenParser;
 
-    public SessionProvider(TokenParser tokenParser) {
-        this.tokenParser = tokenParser;
-    }
+	public SessionProvider(TokenParser tokenParser) {
+		this.tokenParser = tokenParser;
+	}
 
-    @Override
-    public ComponentScope getScope() {
-        return ComponentScope.PerRequest;
-    }
+	@Override
+	public ComponentScope getScope() {
+		return ComponentScope.PerRequest;
+	}
 
-    @Override
-    public Injectable<?> getInjectable(ComponentContext componentContext, CookieParam cookieAnnotation,
-                                       Parameter parameter) {
-        String cookieKey = cookieAnnotation.value();
-        if (isOptionalSession(parameter.getParameterType())) {
-            return new OptionalSessionInjectable(cookieKey);
-        }
-        if (TokenReader.class.isAssignableFrom(parameter.getParameterClass())) {
-            return new SessionInjectable(cookieKey);
-        }
-        return null;
-    }
+	@Override
+	public Injectable<?> getInjectable(ComponentContext componentContext, CookieParam cookieAnnotation,
+			Parameter parameter) {
+		String cookieKey = cookieAnnotation.value();
+		if (isOptionalSession(parameter.getParameterType())) {
+			return new OptionalSessionInjectable(cookieKey);
+		}
+		if (TokenReader.class.isAssignableFrom(parameter.getParameterClass())) {
+			return new SessionInjectable(cookieKey);
+		}
+		return null;
+	}
 
-    private boolean isOptionalSession(Type parameterType) {
-        if (parameterType instanceof ParameterizedType) {
-            ParameterizedType generic = (ParameterizedType) parameterType;
-            if (generic.getRawType().equals(Optional.class)) {
-                return generic.getActualTypeArguments()[0].equals(TokenReader.class);
-            }
-        }
-        return false;
-    }
+	private boolean isOptionalSession(Type parameterType) {
+		if (parameterType instanceof ParameterizedType) {
+			ParameterizedType generic = (ParameterizedType) parameterType;
+			if (generic.getRawType().equals(Optional.class)) {
+				return generic.getActualTypeArguments()[0].equals(TokenReader.class);
+			}
+		}
+		return false;
+	}
 
-    private class OptionalSessionInjectable extends AbstractHttpContextInjectable<Optional<TokenReader>> {
+	private class OptionalSessionInjectable extends AbstractHttpContextInjectable<Optional<TokenReader>> {
 
-        private final SessionInjectable sessionInjectable;
+		private final SessionInjectable sessionInjectable;
 
-        public OptionalSessionInjectable(String cookieKey) {
-            sessionInjectable = new SessionInjectable(cookieKey);
-        }
+		public OptionalSessionInjectable(String cookieKey) {
+			sessionInjectable = new SessionInjectable(cookieKey);
+		}
 
-        @Override
-        public Optional<TokenReader> getValue(HttpContext context) {
-            return Optional.fromNullable(sessionInjectable.getValue(context));
-        }
+		@Override
+		public Optional<TokenReader> getValue(HttpContext context) {
+			return Optional.fromNullable(sessionInjectable.getValue(context));
+		}
 
-    }
+	}
 
-    private class SessionInjectable extends AbstractHttpContextInjectable<TokenReader> {
+	private class SessionInjectable extends AbstractHttpContextInjectable<TokenReader> {
 
-        private final String cookieKey;
+		private final String cookieKey;
 
-        public SessionInjectable(String cookieKey) {
-            this.cookieKey = cookieKey;
-        }
+		public SessionInjectable(String cookieKey) {
+			this.cookieKey = cookieKey;
+		}
 
-        @Override
-        public TokenReader getValue(HttpContext context) {
-            Cookie cookie = context.getRequest().getCookies().get(cookieKey);
-            if (cookie != null) {
-                try {
-                    return tokenParser.parseAndVerify(cookie.getValue());
-                } catch (TokenVerificationException e) {
-                    LOG.warn("Received invalid session cookie {}", cookie);
-                }
-            }
-            return null;
-        }
-    }
+		@Override
+		public TokenReader getValue(HttpContext context) {
+			Cookie cookie = context.getRequest().getCookies().get(cookieKey);
+			if (cookie != null) {
+				try {
+					return tokenParser.parseAndVerify(cookie.getValue());
+				} catch (TokenVerificationException e) {
+					LOG.warn("Received invalid session cookie {}", cookie);
+				}
+			}
+			return null;
+		}
+	}
 
 }

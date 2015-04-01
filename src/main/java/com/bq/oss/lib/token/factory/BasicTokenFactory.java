@@ -37,7 +37,8 @@ public class BasicTokenFactory implements TokenFactory {
 		long expiresAt = expireTime.toEpochMilli();
 		String token = serializer.serialize(info, expiresAt, signer);
 		if (info.isOneUseToken()) {
-			oneTimeAccessTokenRepository.save(new OneTimeAccessToken(token, Date.from(expireTime), Arrays.asList(tags)));
+			oneTimeAccessTokenRepository
+					.save(new OneTimeAccessToken(token, Date.from(expireTime), Arrays.asList(tags)));
 		}
 		return new TokenGrant(token, expiresIn);
 	}

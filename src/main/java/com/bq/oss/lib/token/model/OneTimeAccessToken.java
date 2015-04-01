@@ -17,17 +17,17 @@ public class OneTimeAccessToken {
 	private final Date expireAt;
 	private final List<String> tags;
 
-    public OneTimeAccessToken(String id, Date expireAt, List<String> tags) {
-        this.id = id;
-        this.expireAt = expireAt;
-        this.tags = isEmptyList(tags) ? null : tags;
-    }
+	public OneTimeAccessToken(String id, Date expireAt, List<String> tags) {
+		this.id = id;
+		this.expireAt = expireAt;
+		this.tags = isEmptyList(tags) ? null : tags;
+	}
 
-    private boolean isEmptyList(List<String> list) {
-        return list == null || list.size() == 0;
-    }
+	private boolean isEmptyList(List<String> list) {
+		return list == null || list.size() == 0;
+	}
 
-    public String getId() {
+	public String getId() {
 		return id;
 	}
 

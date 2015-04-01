@@ -11,5 +11,5 @@ public enum TokenType {
 
 	CODE,
 	TOKEN,
-    REFRESH;
+	REFRESH;
 }
