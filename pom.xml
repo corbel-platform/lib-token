@@ -33,10 +33,10 @@
     </organization>
 
     <scm>
-        <connection>scm:git:git@github.com:bq/lib-token.git</connection>
-        <developerConnection>scm:git:git@github.com:bq/lib-token.git</developerConnection>
-        <url>https://github.com/bq/lib-token</url>
-        <tag>HEAD</tag>
+      <connection>scm:git:ssh://bq-devtools@git.dev.bqsoftware.net:29418/lib-token</connection>
+      <developerConnection>scm:git:ssh://bq-devtools@git.dev.bqsoftware.net:29418/lib-token</developerConnection>
+      <url>https://github.com/bq/lib-token</url>
+      <tag>HEAD</tag>
     </scm>
 
     <properties>
