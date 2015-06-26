@@ -5,10 +5,14 @@ package com.bq.oss.lib.token;
 
 import java.util.Objects;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 import com.bq.oss.lib.token.model.TokenType;
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 /**
  * @author Alexander De Leon
@@ -16,135 +20,135 @@ import com.google.gson.*;
  */
 public class TokenInfo {
 
-	private static final String TYPE = "type";
-	private static final String USER_ID = "userId";
-	private static final String CLIENT_ID = "clientId";
-	private static final String DEVICE_ID = "deviceId";
-	private static final String ONE_USE = "isOneUse";
-	private static final String STATE = "state";
-	private static final String DOMAIN_ID = "domainId";
+    private static final String TYPE = "type";
+    private static final String USER_ID = "userId";
+    private static final String CLIENT_ID = "clientId";
+    private static final String DEVICE_ID = "deviceId";
+    private static final String ONE_USE = "isOneUse";
+    private static final String STATE = "state";
+    private static final String DOMAIN_ID = "domainId";
 
-	private final JsonObject data;
+    private final JsonObject data;
 
-	public static TokenInfo deserialize(String asAString) {
-		Validate.notEmpty(asAString);
-		try {
-			JsonParser parser = new JsonParser();
-			JsonElement json = parser.parse(asAString);
-			Validate.isTrue(json.isJsonObject());
-			return new TokenInfo(json.getAsJsonObject());
-		} catch (JsonParseException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
+    public static TokenInfo deserialize(String asAString) {
+        Validate.notEmpty(asAString);
+        try {
+            JsonParser parser = new JsonParser();
+            JsonElement json = parser.parse(asAString);
+            Validate.isTrue(json.isJsonObject());
+            return new TokenInfo(json.getAsJsonObject());
+        } catch (JsonParseException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	public static Builder newBuilder() {
-		return new Builder();
-	}
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
-	private TokenInfo(JsonObject data) {
-		this.data = data;
-	}
+    private TokenInfo(JsonObject data) {
+        this.data = data;
+    }
 
-	public TokenType getTokenType() {
-		return TokenType.valueOf(getAsString(TYPE).toUpperCase());
-	}
+    public TokenType getTokenType() {
+        return TokenType.valueOf(getAsString(TYPE).toUpperCase());
+    }
 
-	public String getUserId() {
-		return getAsString(USER_ID);
-	}
+    public String getUserId() {
+        return getAsString(USER_ID);
+    }
 
-	public String getClientId() {
-		return getAsString(CLIENT_ID);
-	}
+    public String getClientId() {
+        return getAsString(CLIENT_ID);
+    }
 
-	public String getDeviceId() {
-		return getAsString(DEVICE_ID);
-	}
+    public String getDeviceId() {
+        return getAsString(DEVICE_ID);
+    }
 
-	public String getState() {
-		return getAsString(STATE);
-	}
+    public String getState() {
+        return getAsString(STATE);
+    }
 
-	public String getDomainId() {
-		return getAsString(DOMAIN_ID);
-	}
+    public String getDomainId() {
+        return getAsString(DOMAIN_ID);
+    }
 
-	public boolean isOneUseToken() {
-		Boolean val = getAsBoolean(ONE_USE);
-		return val != null ? val : false;
-	}
+    public boolean isOneUseToken() {
+        Boolean val = getAsBoolean(ONE_USE);
+        return val != null ? val : false;
+    }
 
-	public String serialize() {
-		return data.toString();
-	}
+    public String serialize() {
+        return data.toString();
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(data);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(data);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof TokenInfo)) {
-			return false;
-		}
-		TokenInfo that = (TokenInfo) obj;
-		return Objects.equals(this.data.toString(), that.data.toString());
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof TokenInfo)) {
+            return false;
+        }
+        TokenInfo that = (TokenInfo) obj;
+        return Objects.equals(this.data.toString(), that.data.toString());
+    }
 
-	private String getAsString(String key) {
-		return data.has(key) ? data.get(key).getAsString() : null;
-	}
+    private String getAsString(String key) {
+        return data.has(key) ? data.get(key).getAsString() : null;
+    }
 
-	private Boolean getAsBoolean(String key) {
-		return data.has(key) ? data.get(key).getAsBoolean() : null;
-	}
+    private Boolean getAsBoolean(String key) {
+        return data.has(key) ? data.get(key).getAsBoolean() : null;
+    }
 
-	public static class Builder {
-		private final JsonObject data;
+    public static class Builder {
+        private final JsonObject data;
 
-		private Builder() {
-			data = new JsonObject();
-		}
+        private Builder() {
+            data = new JsonObject();
+        }
 
-		public Builder setType(TokenType type) {
-			data.add(TYPE, new JsonPrimitive(type.name()));
-			return this;
-		}
+        public Builder setType(TokenType type) {
+            data.add(TYPE, new JsonPrimitive(type.name()));
+            return this;
+        }
 
-		public Builder setUserId(String userId) {
-			data.add(USER_ID, new JsonPrimitive(userId));
-			return this;
-		}
+        public Builder setUserId(String userId) {
+            data.add(USER_ID, new JsonPrimitive(userId));
+            return this;
+        }
 
-		public Builder setClientId(String clientId) {
-			data.add(CLIENT_ID, new JsonPrimitive(clientId));
-			return this;
-		}
+        public Builder setClientId(String clientId) {
+            data.add(CLIENT_ID, new JsonPrimitive(clientId));
+            return this;
+        }
 
-		public Builder setDeviceId(String deviceIdId) {
-			data.add(DEVICE_ID, new JsonPrimitive(deviceIdId));
-			return this;
-		}
+        public Builder setDeviceId(String deviceIdId) {
+            data.add(DEVICE_ID, new JsonPrimitive(deviceIdId));
+            return this;
+        }
 
-		public Builder setOneUseToken(boolean isOneUse) {
-			data.add(ONE_USE, new JsonPrimitive(isOneUse));
-			return this;
-		}
+        public Builder setOneUseToken(boolean isOneUse) {
+            data.add(ONE_USE, new JsonPrimitive(isOneUse));
+            return this;
+        }
 
-		public Builder setState(String state) {
-			data.add(STATE, new JsonPrimitive(state));
-			return this;
-		}
+        public Builder setState(String state) {
+            data.add(STATE, new JsonPrimitive(state));
+            return this;
+        }
 
-		public Builder setDomainId(String domainId) {
-			data.add(DOMAIN_ID, new JsonPrimitive(domainId));
-			return this;
-		}
+        public Builder setDomainId(String domainId) {
+            data.add(DOMAIN_ID, new JsonPrimitive(domainId));
+            return this;
+        }
 
-		public TokenInfo build() {
-			return new TokenInfo(data);
-		}
-	}
+        public TokenInfo build() {
+            return new TokenInfo(data);
+        }
+    }
 }

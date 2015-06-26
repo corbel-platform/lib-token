@@ -1,14 +1,18 @@
-/*
- * Copyright (C) 2014 StarTIC
- */
 package com.bq.oss.lib.token.provider;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import javax.inject.Singleton;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.core.Cookie;
 
+import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.jersey.server.internal.inject.AbstractContainerRequestValueFactory;
+import org.glassfish.jersey.server.internal.inject.AbstractValueFactoryProvider;
+import org.glassfish.jersey.server.internal.inject.MultivaluedParameterExtractorProvider;
+import org.glassfish.jersey.server.internal.inject.ParamInjectionResolver;
+import org.glassfish.jersey.server.model.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,91 +20,85 @@ import com.bq.oss.lib.token.exception.TokenVerificationException;
 import com.bq.oss.lib.token.parser.TokenParser;
 import com.bq.oss.lib.token.reader.TokenReader;
 import com.google.common.base.Optional;
-import com.sun.jersey.api.core.HttpContext;
-import com.sun.jersey.api.model.Parameter;
-import com.sun.jersey.core.spi.component.ComponentContext;
-import com.sun.jersey.core.spi.component.ComponentScope;
-import com.sun.jersey.server.impl.inject.AbstractHttpContextInjectable;
-import com.sun.jersey.spi.inject.Injectable;
-import com.sun.jersey.spi.inject.InjectableProvider;
 
-/**
- * @author Alexander De Leon
- *
- */
-public class SessionProvider implements InjectableProvider<CookieParam, Parameter> {
+public class SessionProvider extends AbstractValueFactoryProvider {
 
-	private static final Logger LOG = LoggerFactory.getLogger(SessionProvider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SessionProvider.class);
 
-	private final TokenParser tokenParser;
+    private final TokenParser tokenParser;
 
-	public SessionProvider(TokenParser tokenParser) {
-		this.tokenParser = tokenParser;
-	}
+    public SessionProvider(MultivaluedParameterExtractorProvider mpep, ServiceLocator injector, TokenParser tokenParser) {
+        super(mpep, injector, Parameter.Source.BEAN_PARAM);
+        this.tokenParser = tokenParser;
+    }
 
-	@Override
-	public ComponentScope getScope() {
-		return ComponentScope.PerRequest;
-	}
+    @Override
+    protected AbstractContainerRequestValueFactory<?> createValueFactory(Parameter parameter) {
+        String parameterName = parameter.getSourceName();
+        if (parameterName == null || parameterName.length() == 0) {
+            // Invalid cookie parameter name
+            return null;
+        }
 
-	@Override
-	public Injectable<?> getInjectable(ComponentContext componentContext, CookieParam cookieAnnotation,
-			Parameter parameter) {
-		String cookieKey = cookieAnnotation.value();
-		if (isOptionalSession(parameter.getParameterType())) {
-			return new OptionalSessionInjectable(cookieKey);
-		}
-		if (TokenReader.class.isAssignableFrom(parameter.getParameterClass())) {
-			return new SessionInjectable(cookieKey);
-		}
-		return null;
-	}
+        if (isOptionalSession(parameter.getType())) {
+            return new OptionalSessionInjectable(parameterName);
+        }
+        if (TokenReader.class.isAssignableFrom(parameter.getRawType())) {
+            return new SessionInjectable(parameterName);
+        }
+        return null;
+    }
 
-	private boolean isOptionalSession(Type parameterType) {
-		if (parameterType instanceof ParameterizedType) {
-			ParameterizedType generic = (ParameterizedType) parameterType;
-			if (generic.getRawType().equals(Optional.class)) {
-				return generic.getActualTypeArguments()[0].equals(TokenReader.class);
-			}
-		}
-		return false;
-	}
+    @Singleton static final class InjectionResolver extends ParamInjectionResolver<CookieParam> {
+        public InjectionResolver() {
+            super(SessionProvider.class);
+        }
+    }
 
-	private class OptionalSessionInjectable extends AbstractHttpContextInjectable<Optional<TokenReader>> {
+    private class OptionalSessionInjectable extends AbstractContainerRequestValueFactory<Optional<TokenReader>> {
 
-		private final SessionInjectable sessionInjectable;
+        private final SessionInjectable sessionInjectable;
 
-		public OptionalSessionInjectable(String cookieKey) {
-			sessionInjectable = new SessionInjectable(cookieKey);
-		}
+        public OptionalSessionInjectable(String cookieKey) {
+            sessionInjectable = new SessionInjectable(cookieKey);
+        }
 
-		@Override
-		public Optional<TokenReader> getValue(HttpContext context) {
-			return Optional.fromNullable(sessionInjectable.getValue(context));
-		}
+        @Override
+        public Optional<TokenReader> provide() {
+            return Optional.fromNullable(sessionInjectable.provide());
+        }
+    }
 
-	}
+    private class SessionInjectable extends AbstractContainerRequestValueFactory<TokenReader> {
 
-	private class SessionInjectable extends AbstractHttpContextInjectable<TokenReader> {
+        private final String cookieKey;
 
-		private final String cookieKey;
+        public SessionInjectable(String cookieKey) {
+            this.cookieKey = cookieKey;
+        }
 
-		public SessionInjectable(String cookieKey) {
-			this.cookieKey = cookieKey;
-		}
+        @Override
+        public TokenReader provide() {
+            Cookie cookie = getContainerRequest().getCookies().get(cookieKey);
+            if (cookie != null) {
+                try {
+                    return tokenParser.parseAndVerify(cookie.getValue());
+                } catch (TokenVerificationException e) {
+                    LOG.warn("Received invalid session cookie {}", cookie);
+                }
+            }
+            return null;
+        }
+    }
 
-		@Override
-		public TokenReader getValue(HttpContext context) {
-			Cookie cookie = context.getRequest().getCookies().get(cookieKey);
-			if (cookie != null) {
-				try {
-					return tokenParser.parseAndVerify(cookie.getValue());
-				} catch (TokenVerificationException e) {
-					LOG.warn("Received invalid session cookie {}", cookie);
-				}
-			}
-			return null;
-		}
-	}
+    private boolean isOptionalSession(Type parameterType) {
+        if (parameterType instanceof ParameterizedType) {
+            ParameterizedType generic = (ParameterizedType) parameterType;
+            if (generic.getRawType().equals(Optional.class)) {
+                return generic.getActualTypeArguments()[0].equals(TokenReader.class);
+            }
+        }
+        return false;
+    }
 
 }
