@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  *
  */
 @Configuration
-@EnableMongoRepositories(value = { "com.bq.oss.lib.token.repository" }, repositoryFactoryBeanClass = MongoCommonRepositoryFactoryBean.class)
+@EnableMongoRepositories(value = { "io.corbel.lib.token.repository" }, repositoryFactoryBeanClass = MongoCommonRepositoryFactoryBean.class)
 public class OneTimeAccessTokenIoc {
 
 	@Bean
