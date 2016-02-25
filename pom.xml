@@ -39,6 +39,7 @@
       <groupId>io.dropwizard</groupId>
       <artifactId>dropwizard-core</artifactId>
       <version>${dropwizard.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>io.corbel.lib</groupId>
